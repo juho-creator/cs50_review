@@ -1,0 +1,144 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+typedef struct node{
+    int number;
+    struct node *next;
+}node;
+
+
+node *create(int number); // Creates first element of linked list
+bool find(node *head, int number); // check if number exists in linked list
+node *insert(node *head, int number); // prepend number into linked list
+void print_link(node *head); // print linked list
+void destroy(node *head); // clear memory of linked list
+void destroy_recursive(node *head); // clear memory of linked list with recursive function
+
+
+
+int main(int argc, char *argv[])
+{
+    // Creating new element of linked list
+    node *list = create(0);
+
+    // Prepending new elements into linked list
+    for (int i = 1; i <= 10; i++)
+    {
+        list = insert(list, i);
+    }
+
+    // Print all of linked list
+    print_link(list);
+
+    // Check if number exists in linked list
+    bool exists = find(list ,11);
+
+    // Destroy everything in linked list
+    destroy_recursive(list);
+
+}
+
+
+
+node *create(int number)
+{
+    // Dynamically allocate memory
+    node *n = malloc(sizeof(node));
+
+    // check if we ran out of memory
+    if (n == NULL)
+    {
+        printf("Ran out of memory\n");
+        return NULL;
+    }
+
+    // initialize number and linking address
+    n->number = number;
+    n->next = NULL;
+
+    // return newly created element of linked list
+    return n;
+}
+
+
+bool find(node *head, int number)
+{
+    // Initiate the following until end of linked list
+    while (head != NULL)
+    {
+        // return true if number was found in linked list
+        if (head->number == number)
+        {
+            printf("'%i' found\n",number);
+            return true;
+        }
+
+        // move to next element if number not found
+        head= head->next;
+    }
+
+    // print the following and return false if number was not found in linked list
+    printf("'%i' not found\n",number);
+    return false;
+}
+
+
+
+node *insert(node *head, int number)
+{
+    // Dynamically allocate memory
+    node *n = malloc(sizeof(node));
+
+    // check if we ran out of memory
+    if (n == NULL)
+    {
+        printf("Ran out of memory\n");
+        return NULL;
+    }
+
+    // Populate and prepend node
+    n->number = number;
+    n->next = head;
+    head = n;
+
+    // Return linked list with prepended node
+    return head;
+}
+
+
+void print_link(node *head)
+{
+    // Print entire element of list
+    printf("linked list : ");
+    while (head != NULL)
+    {
+        printf("%i -> ",head->number);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+
+void destroy_recursive(node *head)
+{
+    // Stop if null pointer was reached
+    if (head == NULL)
+    {
+        return;
+    }
+
+    destroy(head->next);     // recall function until null pointer is reached
+    free(head);    // free in stack
+
+}
+
+void destroy(node *head)
+{
+    while (head != NULL)
+    {
+        node *next = head->next;    // keep track of next element
+        free(head);     // free current element
+        head = next;    // move to next element
+    }
+}
