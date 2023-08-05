@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+//  node(element) of linked list
 typedef struct node{
     int number;
     struct node *next;
