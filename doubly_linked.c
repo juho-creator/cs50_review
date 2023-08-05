@@ -130,7 +130,15 @@ void print_link(node *head)
         printf("%i -> ",head->number);
         head = head->next;
     }
-    printf("NULL\n");
+    if (head == NULL)
+    {
+        printf("NULL\n");        
+    }
+    else
+    {
+        printf("%i\n", head->number);
+    }
+    
 }
 
 
