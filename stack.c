@@ -1,23 +1,27 @@
+/*
+Review on stack in linked list
+Disclaimer : may not have comments on redundant codes to other code files
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
-
+// Node structure with number and pointer
 typedef struct node{
     int number;
     struct node* next;
 }node;
 
 
-node *create(int number);
-node *push(node *list, int number);
-void pop(node **list);
-void print_link(node *list);
+node *create(int number); // Creates initial node
+node *push(node *list, int number); // Prepends node, forming linked list
+void pop(node **list); // Removes the most recently added node
+void print_link(node *list); // Prints every node in linked list
 
 int main()
 {
     // Create new node
     node *list = create(11);
-
 
     // print node
     print_link(list);
@@ -28,14 +32,12 @@ int main()
         list = push(list, i);
     }
 
-
     // print node
     print_link(list);
-
+    
     // Remove the most recently added node from linked list
     pop(&list);
-
-
+    
     // print node
     print_link(list);
 }
@@ -65,8 +67,13 @@ node *push(node *list, int number)
 
 void pop(node **list)
 {
+    // Create a pointer for keeping track of second node
     node *trav = (*list)->next;
+    
+    // Clear the first node
     free(*list);
+
+    // Move the head pointer to second node
     *list = trav;
 }
 
